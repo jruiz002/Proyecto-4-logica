@@ -232,7 +232,6 @@ Este proyecto sienta las bases para explorar aplicaciones más complejas de la l
 - `sistema_propinas_simple.py`: Implementación principal
 - `requirements.txt`: Dependencias del proyecto
 - `funciones_membresia.png`: Visualización de funciones de membresía
-- `superficie_control.png`: Superficie de control 3D
 
 ---
 

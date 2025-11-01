@@ -75,6 +75,29 @@ Proyecto 4/
 | 6.5/10   | 6.0/10 | 12.9%   | Servicio promedio |
 | 1/10     | 1/10   | 8.2%    | Experiencia muy negativa |
 
+## 📊 Interpretación de las Funciones de Membresía
+
+La gráfica generada (`funciones_membresia.png`) muestra las **funciones de membresía triangulares** para la variable de salida "propina":
+
+### Análisis de la Gráfica:
+- **🔵 Línea azul (baja)**: Propina baja (0-13%)
+  - Máximo grado de pertenencia en 0%
+  - Decrece linealmente hasta 13%
+
+- **🟠 Línea naranja (media)**: Propina media (0-25%)
+  - Máximo grado de pertenencia en 13%
+  - Forma triangular simétrica centrada en 13%
+
+- **🟢 Línea verde (alta)**: Propina alta (13-25%)
+  - Máximo grado de pertenencia en 25%
+  - Crece linealmente desde 13%
+
+### Características Clave:
+✅ **Solapamiento inteligente**: Las funciones se superponen en las zonas de transición  
+✅ **Transiciones suaves**: No hay cambios abruptos entre categorías  
+✅ **Manejo de incertidumbre**: Un valor puede pertenecer parcialmente a múltiples categorías  
+✅ **Interpretabilidad**: Las formas triangulares son fáciles de entender
+
 ## 📖 Documentación
 
 El archivo `informe_proyecto.md` contiene:
