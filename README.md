@@ -14,10 +14,34 @@ Este proyecto implementa un sistema de control fuzzy que determina la propina ap
 source venv_fuzzy/bin/activate
 ```
 
+#### Windows (PowerShell / Símbolo del sistema)
+
+Si está en Windows, puede crear y activar un entorno virtual e instalar las dependencias con los siguientes comandos.
+
+PowerShell (recomendado):
+
+```powershell
+py -3.11 -m venv .venv
+# Permite la ejecución del script de activación solo en la sesión actual
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+```
+
+Símbolo del sistema (cmd.exe):
+
+```cmd
+py -3.11 -m venv .venv
+.\.venv\Scripts\activate.bat
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+```
+
 ### Paso 2: Ejecutar el sistema
 
 ```bash
-python sistema_propinas_simple.py
+python sistema_propinas.py
 ```
 
 ### Paso 3: Ver los resultados
@@ -34,8 +58,6 @@ Proyecto 4/
 ├── sistema_propinas_simple.py    # Implementación principal
 ├── sistema_propinas_fuzzy.py     # Versión completa con gráficos 3D
 ├── requirements.txt              # Dependencias
-├── informe_proyecto.md          # Documento de análisis completo
-├── generar_pdf.py               # Script para generar PDF
 ├── README.md                    # Este archivo
 ├── funciones_membresia.png      # Visualización generada
 ├── superficie_control.png       # Superficie 3D (si se genera)
@@ -97,25 +119,3 @@ La gráfica generada (`funciones_membresia.png`) muestra las **funciones de memb
 ✅ **Transiciones suaves**: No hay cambios abruptos entre categorías  
 ✅ **Manejo de incertidumbre**: Un valor puede pertenecer parcialmente a múltiples categorías  
 ✅ **Interpretabilidad**: Las formas triangulares son fáciles de entender
-
-## 📖 Documentación
-
-El archivo `informe_proyecto.md` contiene:
-- Metodología completa
-- Análisis de resultados
-- Reflexiones individuales y grupales
-- Conclusiones y aprendizajes
-
-## 🎯 Objetivos Cumplidos
-
-✅ Implementación exitosa de lógica fuzzy  
-✅ Sistema funcional con resultados coherentes  
-✅ Visualizaciones generadas automáticamente  
-✅ Documentación completa con reflexiones  
-✅ Casos de estudio diversos y análisis detallado  
-
-## 👥 Autor
-
-Proyecto desarrollado para el curso de Lógica Matemática  
-Universidad del Valle de Guatemala  
-Noviembre 2025

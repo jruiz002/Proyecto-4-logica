@@ -1,9 +1,6 @@
 """
-Sistema de Control Fuzzy para Cálculo de Propinas
+Sistema de Control Fuzzy para Cálculo de Propinas - Versión Simplificada
 Proyecto de Lógica Matemática - Universidad del Valle de Guatemala
-
-Este sistema utiliza lógica fuzzy para determinar la propina apropiada
-basándose en la calidad del servicio y la comida.
 """
 
 import numpy as np
@@ -11,7 +8,7 @@ import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 import matplotlib.pyplot as plt
 
-class SistemaPropinas:
+class SistemaPropinasSimple:
     def __init__(self):
         """Inicializa el sistema de control fuzzy para propinas"""
         self.setup_variables()
@@ -111,93 +108,146 @@ class SistemaPropinas:
         return self.simulacion.output['propina']
     
     def visualizar_funciones_membresia(self):
-        """Genera gráficos de las funciones de membresía"""
-        fig, (ax0, ax1, ax2) = plt.subplots(nrows=3, figsize=(8, 9))
-        
+        """Genera gráficos de las funciones de membresía y los guarda en archivos"""
+        fig, (ax0, ax1, ax2) = plt.subplots(nrows=3, figsize=(10, 12))
+
         # Gráfico para calidad del servicio
         self.calidad_servicio.view(ax=ax0)
         ax0.set_title('Funciones de Membresía - Calidad del Servicio')
-        
+        ax0.grid(True)
+
         # Gráfico para calidad de la comida
         self.calidad_comida.view(ax=ax1)
         ax1.set_title('Funciones de Membresía - Calidad de la Comida')
-        
+        ax1.grid(True)
+
         # Gráfico para propina
         self.propina.view(ax=ax2)
         ax2.set_title('Funciones de Membresía - Propina (%)')
-        
+        ax2.grid(True)
+
         plt.tight_layout()
-        plt.savefig('funciones_membresia.png', dpi=300, bbox_inches='tight')
-        plt.show()
+        plt.savefig('images/funciones_membresia.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        print("Gráfico guardado: images/funciones_membresia.png")
+    
+    def generar_tabla_resultados(self):
+        """Genera una tabla de resultados para diferentes combinaciones"""
+        print("\n=== TABLA DE RESULTADOS ===")
+        print("Servicio | Comida | Propina | Interpretación")
+        print("-" * 50)
+        
+        resultados = []
+        for servicio in range(0, 11, 2):
+            for comida in range(0, 11, 2):
+                propina = self.calcular_propina(servicio, comida)
+                
+                # Interpretar el resultado
+                if propina < 10:
+                    interpretacion = "Muy Baja"
+                elif propina < 15:
+                    interpretacion = "Baja"
+                elif propina < 20:
+                    interpretacion = "Media"
+                else:
+                    interpretacion = "Alta"
+                
+                print(f"   {servicio:2d}    |   {comida:2d}   | {propina:5.1f}% | {interpretacion}")
+                resultados.append((servicio, comida, propina, interpretacion))
+        
+        return resultados
     
     def generar_superficie_control(self):
-        """Genera una superficie de control 3D"""
+        """Genera una superficie de control 3D y la guarda en un archivo"""
         # Crear rangos para las variables de entrada
         servicio_range = np.arange(0, 11, 1)
         comida_range = np.arange(0, 11, 1)
-        
+
         # Crear matrices para almacenar los resultados
         propinas = np.zeros((len(servicio_range), len(comida_range)))
-        
+
         # Calcular propina para cada combinación
         for i, servicio in enumerate(servicio_range):
             for j, comida in enumerate(comida_range):
                 propinas[i, j] = self.calcular_propina(servicio, comida)
-        
+
         # Crear el gráfico de superficie
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111, projection='3d')
-        
+
         X, Y = np.meshgrid(comida_range, servicio_range)
         surf = ax.plot_surface(X, Y, propinas, cmap='viridis', alpha=0.8)
-        
+
         ax.set_xlabel('Calidad de la Comida')
         ax.set_ylabel('Calidad del Servicio')
         ax.set_zlabel('Propina (%)')
         ax.set_title('Superficie de Control - Sistema de Propinas Fuzzy')
-        
+
         fig.colorbar(surf)
-        plt.savefig('superficie_control.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        
+        plt.savefig('images/superficie_control.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        print("Gráfico guardado: images/superficie_control.png")
         return propinas
 
 def main():
     """Función principal para demostrar el sistema"""
-    print("=== Sistema de Control Fuzzy para Propinas ===\n")
+    print("=== Sistema de Control Fuzzy para Propinas ===")
+    print("Universidad del Valle de Guatemala")
+    print("Proyecto de Lógica Matemática\n")
     
     # Crear instancia del sistema
-    sistema = SistemaPropinas()
+    sistema = SistemaPropinasSimple()
     
     # Visualizar funciones de membresía
     print("Generando gráficos de funciones de membresía...")
     sistema.visualizar_funciones_membresia()
     
+    # Generar tabla de resultados
+    resultados = sistema.generar_tabla_resultados()
+    
     # Generar superficie de control
     print("Generando superficie de control...")
-    superficie = sistema.generar_superficie_control()
+    sistema.generar_superficie_control()
     
-    # Ejemplos de cálculo
-    print("\n=== Ejemplos de Cálculo ===")
+    # Ejemplos específicos
+    print("\n=== CASOS DE ESTUDIO ESPECÍFICOS ===")
     
-    casos_prueba = [
-        (6.5, 6.0, "Servicio promedio, comida promedio"),
-        (10, 10, "Servicio excelente, comida excelente"),
-        (2, 8, "Servicio pobre, comida excelente"),
-        (9, 4, "Servicio excelente, comida pobre"),
-        (1, 1, "Servicio pobre, comida pobre")
+    casos_estudio = [
+        (6.5, 6.0, "Restaurante promedio - servicio y comida regulares"),
+        (10, 10, "Restaurante excelente - servicio y comida excepcionales"),
+        (2, 8, "Servicio deficiente pero comida excelente"),
+        (9, 4, "Servicio excelente pero comida deficiente"),
+        (1, 1, "Experiencia completamente negativa"),
+        (7.5, 8.5, "Buen restaurante - servicio bueno, comida muy buena"),
+        (3.5, 5.5, "Experiencia por debajo del promedio")
     ]
     
-    for servicio, comida, descripcion in casos_prueba:
+    for servicio, comida, descripcion in casos_estudio:
         propina = sistema.calcular_propina(servicio, comida)
-        print(f"{descripcion}:")
-        print(f"  Servicio: {servicio}/10, Comida: {comida}/10")
-        print(f"  Propina recomendada: {propina:.1f}%\n")
+        print(f"\n{descripcion}:")
+        print(f"  • Calidad del servicio: {servicio}/10")
+        print(f"  • Calidad de la comida: {comida}/10")
+        print(f"  • Propina recomendada: {propina:.1f}%")
+        
+        # Análisis del resultado
+        if propina < 12:
+            analisis = "Propina mínima debido a la experiencia insatisfactoria"
+        elif propina < 16:
+            analisis = "Propina moderada, hay aspectos que mejorar"
+        elif propina < 20:
+            analisis = "Propina estándar para un servicio aceptable"
+        else:
+            analisis = "Propina generosa por un servicio excepcional"
+        
+        print(f"  • Análisis: {analisis}")
     
-    print("¡Sistema ejecutado exitosamente!")
-    print("Se han generado los archivos:")
-    print("- funciones_membresia.png")
-    print("- superficie_control.png")
+    print(f"\n=== RESUMEN DEL SISTEMA ===")
+    print("• Variables de entrada: Calidad del servicio (0-10) y Calidad de la comida (0-10)")
+    print("• Variable de salida: Porcentaje de propina (0-25%)")
+    print("• Funciones de membresía: Triangulares (pobre, promedio, excelente)")
+    print("• Reglas fuzzy: 9 reglas que combinan las variables de entrada")
+    print("• Método de defuzzificación: Centroide")
+    print("\n¡Sistema ejecutado exitosamente!")
 
 if __name__ == "__main__":
     main()
